@@ -7,6 +7,7 @@ from typing import List, TypeVar, Union
 
 class Auth:
     """This class provides methods to manage the API authentication"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """TODO: Implement later"""
         return False
@@ -15,6 +16,6 @@ class Auth:
         """TODO: Implement later"""
         pass
 
-    def current_user(self, request=None) -> TypeVar('User'): # type: ignore
+    def current_user(self, request=None) -> TypeVar('User'):  # type: ignore
         """TODO: Implement later"""
         pass
