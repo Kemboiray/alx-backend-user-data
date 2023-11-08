@@ -15,8 +15,12 @@ class Auth:
         return not path.rstrip("/") in [i.rstrip("/") for i in excluded_paths]
 
     def authorization_header(self, request=None) -> Union[str, None]:
-        """TODO: Implement later"""
-        pass
+        """
+        Return the value of the `Authorization` header or `None` if missing
+        """
+        if request is None:
+            return None
+        return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar('User'):  # type: ignore
         """TODO: Implement later"""
