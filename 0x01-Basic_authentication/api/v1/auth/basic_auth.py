@@ -3,6 +3,7 @@
 from api.v1.auth.auth import Auth
 from base64 import b64decode
 from typing import Union
+import binascii
 
 
 class BasicAuth(Auth):
@@ -24,6 +25,6 @@ class BasicAuth(Auth):
         try:
             decoded = b64decode(base64_authorization_header,
                                 validate=True).decode("utf-8")
-        except Exception:
+        except binascii.Error:
             return None
         return decoded
