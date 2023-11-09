@@ -13,7 +13,7 @@ class BasicAuth(Auth):
 
     def extract_base64_authorization_header(
             self, authorization_header: Union[str, None]) -> Union[str, None]:
-        """Return the Base64 part of the Authorization header"""
+        """Return the `Base64` part of the Authorization header"""
         if not isinstance(authorization_header, str):
             return None
         return authorization_header.split(
@@ -23,7 +23,7 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
             self,
             base64_authorization_header: Union[str, None]) -> Union[str, None]:
-        """Return the decoded value of a Base64 string"""
+        """Return the decoded value of a `Base64` string"""
         try:
             return b64decode(base64_authorization_header,
                              validate=True).decode("utf-8")
@@ -33,7 +33,7 @@ class BasicAuth(Auth):
     def extract_user_credentials(
         self, decoded_base64_authorization_header: Union[str, None]
     ) -> Union[Tuple[str, ...], Tuple[None, None]]:
-        """Return the user email and password from the Base64 decoded value"""
+        """Return user email and password from a `Base64` decoded value"""
         if isinstance(decoded_base64_authorization_header,
                       str) and ":" in decoded_base64_authorization_header:
             return tuple(decoded_base64_authorization_header.split(":"))
@@ -42,7 +42,7 @@ class BasicAuth(Auth):
     def user_object_from_credentials(
             self, user_email: Union[str, None],
             user_pwd: Union[str, None]) -> Union[User, None]:
-        """Return the User instance based on his email and password"""
+        """Return the `User` instance based on email and password"""
         if not isinstance(user_email, str) or not isinstance(user_pwd, str):
             return
         try:
@@ -54,6 +54,7 @@ class BasicAuth(Auth):
                 return user
 
     def current_user(self, request=None) -> Union[User, None]:
+        """Overload `Auth` and retrieves the User instance for a request"""
         auth_header = self.authorization_header(request)
         base64_auth_header = self.extract_base64_authorization_header(
             auth_header)
