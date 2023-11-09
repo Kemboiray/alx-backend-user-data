@@ -2,6 +2,7 @@
 """This module defines the class `BasicAuth`"""
 from api.v1.auth.auth import Auth
 from base64 import b64decode
+from models.user import User
 from typing import Tuple, Union
 import binascii
 
@@ -35,3 +36,15 @@ class BasicAuth(Auth):
                       str) and ":" in decoded_base64_authorization_header:
             return tuple(decoded_base64_authorization_header.split(":"))
         return (None, None)
+
+    def user_object_from_credentials(self, user_email: str,
+                                     user_pwd: str) -> Union[User, None]:
+        """Return the User instance based on his email and password"""
+        if not isinstance(user_email, str) or not isinstance(user_pwd, str):
+            return None
+        user = User.search({"email": user_email})
+        if not user:
+            return None
+        if not user[0].is_valid_password(user_pwd):
+            return None
+        return user[0]
