@@ -15,7 +15,8 @@ class BasicAuth(Auth):
         if not isinstance(authorization_header, str):
             return None
         return authorization_header.split(
-            " ")[1] if authorization_header.startswith("Basic ") else None
+            " ")[1] or None if authorization_header.startswith(
+                "Basic ") else None
 
     def decode_base64_authorization_header(
             self, base64_authorization_header: str) -> Union[str, None]:
