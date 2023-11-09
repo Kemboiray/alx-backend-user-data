@@ -44,8 +44,11 @@ class BasicAuth(Auth):
             return
         try:
             users = User.search({"email": user_email})
-        except Exception:
+        except KeyError:
             return
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
+
+    def current_user(self, request=None) -> Union[User, None]:
+        pass
