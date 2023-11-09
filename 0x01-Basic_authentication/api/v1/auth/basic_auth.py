@@ -41,8 +41,11 @@ class BasicAuth(Auth):
                                      user_pwd: str) -> Union[User, None]:
         """Return the User instance based on his email and password"""
         if not isinstance(user_email, str) or not isinstance(user_pwd, str):
-            return None
-        users = User.search({"email": user_email})
+            return
+        try:
+            users = User.search({"email": user_email})
+        except Exception:
+            return
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
