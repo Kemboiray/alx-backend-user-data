@@ -2,7 +2,7 @@
 """This module defines the class `BasicAuth`"""
 from api.v1.auth.auth import Auth
 from base64 import b64decode
-from typing import Union
+from typing import Tuple, Union
 import binascii
 
 
@@ -23,6 +23,15 @@ class BasicAuth(Auth):
         """Return the decoded value of a Base64 string"""
         try:
             return b64decode(base64_authorization_header,
-                                validate=True).decode("utf-8")
+                             validate=True).decode("utf-8")
         except (binascii.Error, TypeError):
             return None
+
+    def extract_user_credentials(
+        self, decoded_base64_authorization_header: str
+    ) -> Union[Tuple[str, ...], Tuple[None, None]]:
+        """Return the user email and password from the Base64 decoded value"""
+        if isinstance(decoded_base64_authorization_header,
+                      str) and ":" in decoded_base64_authorization_header:
+            return tuple(decoded_base64_authorization_header.split(":"))
+        return (None, None)
