@@ -49,6 +49,6 @@ class BasicAuth(Auth):
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
-
-    def current_user(self, request=None) -> Union[User, None]:
-        pass
+    #
+    # def current_user(self, request=None) -> Union[User, None]:
+    #     pass
