@@ -12,6 +12,10 @@ class Auth:
         """Return True if authentication is required for `path`"""
         if path is None or not excluded_paths:
             return True
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith("*"):
+                if path.startswith(excluded_path[:-1]):
+                    return False
         return not path.rstrip("/") in [i.rstrip("/") for i in excluded_paths]
 
     def authorization_header(self, request=None) -> Union[str, None]:
