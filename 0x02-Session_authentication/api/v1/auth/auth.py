@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """This module defines the class `Auth`"""
 
-# from flask import request
 import typing as t
 import os
 
@@ -26,7 +25,7 @@ class Auth:
             return None
         return request.headers.get("Authorization")
 
-    def current_user(self, request=None) -> t.TypeVar('User'):  # type: ignore
+    def current_user(self, request=None):
         """TODO: Implement later"""
         pass
 

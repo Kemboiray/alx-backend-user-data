@@ -4,7 +4,7 @@
 
 import typing as t
 from api.v1.auth.auth import Auth
-# from models.user import User
+from models.user import User
 from uuid import uuid4
 
 
@@ -12,6 +12,9 @@ class SessionAuth(Auth):
     """This class inherits from `Auth`"""
 
     user_id_by_session_id = {}
+
+    def __init__(self) -> None:
+        super().__init__()
 
     def create_session(self, user_id: t.Union[str,
                                               None]) -> t.Union[str, None]:
@@ -26,3 +29,10 @@ class SessionAuth(Auth):
         """Return a User ID corresponding to a Session ID if it exists."""
         if isinstance(session_id, str):
             return SessionAuth.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None) -> t.Union[User, None]:
+        """Return an instance of `User` based on a cookie value"""
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        if isinstance(user_id, str):
+            return User.get(user_id)
