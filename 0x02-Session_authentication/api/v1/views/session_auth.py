@@ -9,6 +9,10 @@ from models.user import User
 
 @app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
 def session_handler():
+    """ POST /api/v1/auth_session/login
+    Return:
+      - User instance JSON represented
+    """
     email = request.form.get("email", None)
     if email is None:
         return jsonify({"error": "email missing"}), 400
