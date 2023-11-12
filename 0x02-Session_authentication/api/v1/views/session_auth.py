@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """This module defines `Flask` views handling session authentication"""
 
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from flask.app import os
 from api.v1.views import app_views
 from models.user import User
+import typing as t
 
 
 @app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
-def session_handler():
+def session_handler() -> t.Tuple[Response, int]:
     """ POST /api/v1/auth_session/login
     Return:
       - User instance JSON represented
@@ -30,4 +31,4 @@ def session_handler():
             res = jsonify(user.to_json())
             res.set_cookie(SESSION_NAME, session_id)
             return res
-    return jsonify({"error": "wrong password"})
+    return jsonify({"error": "wrong password"}), 401
