@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This module defines `Flask` views handling session authentication"""
 
-from flask import jsonify, request, Response
+from flask import jsonify, request
 from flask.app import os
 from api.v1.views import app_views
 from models.user import User
