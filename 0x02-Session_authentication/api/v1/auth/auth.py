@@ -31,5 +31,6 @@ class Auth:
         pass
 
     def session_cookie(self, request=None) -> t.Union[str, None]:
+        """Return the value of the `SESSION_NAME` cookie or `None` if missing"""
         if request is not None:
             return request.cookies.get(SESSION_NAME)
