@@ -5,11 +5,10 @@ from flask import jsonify, request, Response
 from flask.app import os
 from api.v1.views import app_views
 from models.user import User
-import typing as t
 
 
 @app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
-def session_handler() -> t.Tuple[Response, int]:
+def session_handler():
     """ POST /api/v1/auth_session/login
     Return:
       - User instance JSON represented
