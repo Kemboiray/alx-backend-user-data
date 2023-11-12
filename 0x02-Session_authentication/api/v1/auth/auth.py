@@ -2,9 +2,7 @@
 """This module defines the class `Auth`"""
 
 import typing as t
-import os
-
-SESSION_NAME = os.getenv("SESSION_NAME")
+from flask.app import os
 
 
 class Auth:
@@ -33,4 +31,5 @@ class Auth:
         """Return the value of the `SESSION_NAME` cookie or `None` if missing
         """
         if request is not None:
+            SESSION_NAME = os.getenv("SESSION_NAME")
             return request.cookies.get(SESSION_NAME)

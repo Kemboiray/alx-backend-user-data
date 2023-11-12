@@ -2,6 +2,7 @@
 """This module defines `Flask` views handling session authentication"""
 
 from flask import jsonify, request
+from flask.app import os
 from api.v1.views import app_views
 from models.user import User
 
@@ -10,14 +11,19 @@ from models.user import User
 def session_handler():
     email = request.form.get("email", None)
     if email is None:
-        return jsonify('{ "error": "email missing" }'), 400
+        return jsonify({"error": "email missing"}), 400
     password = request.form.get("password", None)
     if password is None:
-        return jsonify('{ "error": "password missing" }'), 400
+        return jsonify({"error": "password missing"}), 400
     users = User.search({"email": email})
     if not users:
-        return jsonify('{"error": "no user found for this email"}')
+        return jsonify({"error": "no user found for this email"})
     for user in users:
         if user.is_valid_password(password):
             from api.v1.app import auth
-
+            session_id = auth.create_session(user.id)
+            SESSION_NAME = os.getenv("SESSION_NAME")
+            res = jsonify(user.to_json())
+            res.set_cookie(SESSION_NAME, session_id)
+            return res
+    return jsonify({"error": "wrong password"})
