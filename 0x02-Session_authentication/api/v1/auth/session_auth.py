@@ -14,6 +14,7 @@ class SessionAuth(Auth):
 
     def create_session(self, user_id: t.Union[str,
                                               None]) -> t.Union[str, None]:
+        """This method creates a Session ID for a user_id"""
         if isinstance(user_id, str):
             self.session_id = str(uuid4())
             SessionAuth.user_id_by_session_id[self.session_id] = user_id
