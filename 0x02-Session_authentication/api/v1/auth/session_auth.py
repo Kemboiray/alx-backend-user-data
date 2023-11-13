@@ -21,14 +21,14 @@ class SessionAuth(Auth):
         """Create a Session ID for a user_id"""
         if isinstance(user_id, str):
             self.session_id = str(uuid4())
-            SessionAuth.user_id_by_session_id[self.session_id] = user_id
+            self.user_id_by_session_id[self.session_id] = user_id
             return self.session_id
 
     def user_id_for_session_id(
             self, session_id: t.Union[str, None]) -> t.Union[str, None]:
         """Return a User ID corresponding to a Session ID if it exists."""
         if isinstance(session_id, str):
-            return SessionAuth.user_id_by_session_id.get(session_id)
+            return self.user_id_by_session_id.get(session_id)
 
     def current_user(self, request=None) -> t.Union[User, None]:
         """Return an instance of `User` based on a cookie value"""
@@ -40,6 +40,6 @@ class SessionAuth(Auth):
     def destroy_session(self, request=None):
         """Destroy a user session"""
         session_id = self.session_cookie(request)
-        if SessionAuth.user_id_by_session_id.pop(session_id, None) is not None:
+        if self.user_id_by_session_id.pop(session_id, None) is not None:
             return True
         return False

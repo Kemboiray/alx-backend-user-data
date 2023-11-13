@@ -2,7 +2,7 @@
 """This module defines `Flask` views handling session authentication"""
 
 from flask import abort, jsonify, request
-from flask.app import os
+import os
 from api.v1.views import app_views
 from models.user import User
 
