@@ -28,11 +28,15 @@ class User(Base):
 
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(length=250), nullable=False)
     hashed_password = Column(String(length=250), nullable=False)
     session_id = Column(String(length=250), nullable=True)
     reset_token = Column(String(length=250), nullable=True)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize a new `User` object."""
+        self.__dict__.update(kwargs)
 
     def __repr__(self):
         """Return the canonical string representation of `User`."""
