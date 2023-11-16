@@ -2,18 +2,16 @@
 """
 This module defines a SQLAlchemy model, `User` for a database table, `users`.
 """
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
-class Base(DeclarativeBase):
-    """Base class"""
-    pass
+Base = declarative_base()
 
 
 class User(Base):
     """
-    This class represents a user in the database.
+    A class used to represent a user in the database.
 
     Attributes
     ----------
@@ -28,10 +26,18 @@ class User(Base):
     reset_token : str
     """
 
-    __tablename__ = "user"
+    __tablename__ = 'users'
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String(250), nullable=False)
-    hashed_password: Mapped[str] = mapped_column(String(250), nullable=False)
-    session_id: Mapped[str] = mapped_column(String(250), nullable=True)
-    reset_token: Mapped[str] = mapped_column(String(250), nullable=True)
+    id = Column(Integer, primary_key=True)
+    email = Column(String(length=250), nullable=False)
+    hashed_password = Column(String(length=250), nullable=False)
+    session_id = Column(String(length=250), nullable=True)
+    reset_token = Column(String(length=250), nullable=True)
+
+    def __repr__(self):
+        """Return the canonical string representation of `User`."""
+        return f"<User(name='{self.name}', email='{self.email}')>"
+
+    def __str__(self):
+        """Return a string representation of `User`."""
+        return f"{self.name} <{self.email}>"
