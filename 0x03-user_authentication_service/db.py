@@ -4,6 +4,7 @@
 from sqlalchemy import create_engine
 # from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from user import Base, User
@@ -46,8 +47,8 @@ class DB:
         """
         try:
             result = self._session.query(User).filter_by(**kwargs).first()
-        except Exception as e:
-            raise(e)
+        except InvalidRequestError:
+            raise InvalidRequestError
         if not result:
             raise NoResultFound
         return result
