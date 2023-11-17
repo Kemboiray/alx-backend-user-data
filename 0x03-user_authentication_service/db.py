@@ -33,10 +33,14 @@ class DB:
         return self.__session
 
     def add_user(self, email: str,
-                 hashed_password: str) -> User:
+                 hashed_password: str) -> t.Union[User, None]:
         """Add a user to the DB
         """
-        new_user = User(email=email, hashed_password=hashed_password)
+        try:
+            new_user = User(email=email, hashed_password=hashed_password)
+        except Exception as e:
+            print(e)
+            return
         self._session.add(new_user)
         self._session.commit()
         return new_user
@@ -52,3 +56,13 @@ class DB:
         if not result:
             raise NoResultFound
         return result
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user in the DB
+        """
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError
+            setattr(user, key, value)
+        self._session.commit()
