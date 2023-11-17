@@ -4,6 +4,7 @@
 from sqlalchemy import create_engine
 # from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from user import Base, User
 import typing as t
@@ -38,3 +39,15 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Return the first row found in the users table
+        as filtered by the input arguments
+        """
+        try:
+            result = self._session.query(User).filter_by(**kwargs).first()
+        except Exception as e:
+            raise(e)
+        if not result:
+            raise NoResultFound
+        return result
