@@ -5,7 +5,7 @@ import bcrypt
 import typing as t
 from db import DB
 from user import User
-from sqlalchemy.orm.exc import NoResultFound # type: ignore
+from sqlalchemy.orm.exc import NoResultFound  # type: ignore
 from uuid import uuid4
 
 
