@@ -34,14 +34,14 @@ class User(Base):
     session_id = Column(String(length=250), nullable=True)
     reset_token = Column(String(length=250), nullable=True)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         """Initialize a new `User` object."""
         self.__dict__.update(kwargs)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return the canonical string representation of `User`."""
         return f"<User(name='{self.name}', email='{self.email}')>"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return a string representation of `User`."""
         return f"{self.name} <{self.email}>"
