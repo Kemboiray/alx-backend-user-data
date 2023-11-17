@@ -46,7 +46,7 @@ def logout():
     user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
-        return jsonify({"message": "logout successful"}), 200
+        return jsonify({"message": "logout successful"})
     abort(403)
 
 
