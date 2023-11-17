@@ -5,6 +5,7 @@ This module defines a SQLAlchemy model, `User` for a database table, `users`.
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+import bcrypt
 
 Base = declarative_base()
 
@@ -36,12 +37,20 @@ class User(Base):
 
     def __init__(self, *args, **kwargs) -> None:
         """Initialize a new `User` object."""
-        self.__dict__.update(kwargs)
+        self.__dict__.update({
+            k: v
+            for k, v in kwargs.items() if k != "hashed_password"
+        })
+        self.hashed_password = bcrypt.hashpw(
+            kwargs.get("hashed_password", "").encode(),
+            bcrypt.gensalt()).decode()
+
+
 #
-    # def __repr__(self) -> str:
-    #     """Return the canonical string representation of `User`."""
-    #     return f"<User(name='{self.name}', email='{self.email}')>"
-    #
-    # def __str__(self) -> str:
-    #     """Return a string representation of `User`."""
-    #     return f"{self.name} <{self.email}>"
+# def __repr__(self) -> str:
+#     """Return the canonical string representation of `User`."""
+#     return f"<User(name='{self.name}', email='{self.email}')>"
+#
+# def __str__(self) -> str:
+#     """Return a string representation of `User`."""
+#     return f"{self.name} <{self.email}>"
