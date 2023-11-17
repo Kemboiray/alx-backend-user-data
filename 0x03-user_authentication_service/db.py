@@ -36,11 +36,7 @@ class DB:
                  hashed_password: str) -> t.Union[User, None]:
         """Add a user to the DB
         """
-        # try:
         new_user = User(email=email, hashed_password=hashed_password)
-        # except Exception as e:
-            # print(e)
-            # return
         self._session.add(new_user)
         self._session.commit()
         return new_user
