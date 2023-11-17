@@ -53,3 +53,13 @@ class Auth:
             return session_id
         except NoResultFound:
             return
+
+    def get_user_from_session_id(
+            self,
+            session_id: t.Union[str, None] = None) -> t.Union[User, None]:
+        """Return the corresponding user from the session ID."""
+        if session_id is not None:
+            try:
+                return self._db.find_user_by(session_id=session_id)
+            except NoResultFound:
+                return
