@@ -37,11 +37,11 @@ class User(Base):
     def __init__(self, *args, **kwargs) -> None:
         """Initialize a new `User` object."""
         self.__dict__.update(kwargs)
-
-    def __repr__(self) -> str:
-        """Return the canonical string representation of `User`."""
-        return f"<User(name='{self.name}', email='{self.email}')>"
-
-    def __str__(self) -> str:
-        """Return a string representation of `User`."""
-        return f"{self.name} <{self.email}>"
+#
+    # def __repr__(self) -> str:
+    #     """Return the canonical string representation of `User`."""
+    #     return f"<User(name='{self.name}', email='{self.email}')>"
+    #
+    # def __str__(self) -> str:
+    #     """Return a string representation of `User`."""
+    #     return f"{self.name} <{self.email}>"
