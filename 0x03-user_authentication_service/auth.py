@@ -90,5 +90,5 @@ class Auth:
             hashed_password = _hash_password(password).decode()
             setattr(user, "hashed_password", hashed_password)
             setattr(user, "reset_token", None)
-        except NoResultFound, AssertionError:
+        except (NoResultFound, AssertionError):
             raise ValueError
