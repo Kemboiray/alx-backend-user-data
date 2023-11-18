@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This module defines a basic Flask app."""
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 app = Flask(__name__)
@@ -46,7 +46,8 @@ def logout():
     user = AUTH.get_user_from_session_id(session_id)
     if user:
         AUTH.destroy_session(user.id)
-        return jsonify({"message": "logout successful"})
+        response = jsonify({"message": "logout successful"})
+        return redirect(location="/", Response=response)
     abort(403)
 
 
